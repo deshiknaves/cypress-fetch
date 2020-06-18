@@ -1,24 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
+import 'react-app-polyfill/stable';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
+  const [employees, setEmployees] = useState([])
+  useEffect(() => {
+    fetch('http://dummy.restapiexample.com/api/v1/employees')
+      .then(response => response.json())
+      .then(data => setEmployees(data.data));
+  }, [])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      Foo
+      <ul>
+        {employees.map(employee => (
+          <li className="employee" key={employee.id}>{employee.employee_name}</li>
+        ))}
+      </ul>
+
     </div>
   );
 }
